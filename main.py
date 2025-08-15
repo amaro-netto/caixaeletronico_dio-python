@@ -27,15 +27,29 @@ menu = """
 
 def main():
     """Função principal que gerencia o fluxo do caixa eletrônico."""
-    global saldo, saques_realizados_hoje, historico_transacoes
+    global saldo, saques_realizados_hoje, historico_transacoes, limite_valor_saque
 
     while True:
         opcao = input(menu).lower()
 
         if opcao == "d":
             print("\n--- Operação de Depósito ---")
-            # Implementar a lógica de depósito aqui
-            pass
+            
+            try:
+                valor_deposito = float(input("Informe o valor do depósito: R$ "))
+                
+                if valor_deposito > 0:
+                    saldo += valor_deposito
+                    
+                    # Formata a string para o histórico
+                    historico_transacoes.append(f"Depósito: R$ {valor_deposito:.2f}")
+                    
+                    print(f"Depósito de R$ {valor_deposito:.2f} realizado com sucesso!")
+                else:
+                    print("Operação falhou! O valor informado deve ser positivo.")
+            
+            except ValueError:
+                print("Operação falhou! O valor informado não é um número válido.")
 
         elif opcao == "s":
             print("\n--- Operação de Saque ---")
