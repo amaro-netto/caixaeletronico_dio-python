@@ -83,9 +83,16 @@ def main():
                 print("Operação falhou! O valor informado não é um número válido.")
         
         elif opcao == "e":
-            print("\n--- Operação de Extrato ---")
-            # Implementar a lógica de extrato aqui
-            pass
+            print("\n--- Extrato ---")
+            
+            if not historico_transacoes:
+                print("Não foram realizadas movimentações.")
+            else:
+                for transacao in historico_transacoes:
+                    print(transacao)
+            
+            print(f"\nSaldo: R$ {saldo:.2f}")
+            print("-----------------")
 
         elif opcao == "q":
             print("\nObrigado por usar nosso sistema. Volte sempre!")
