@@ -41,7 +41,6 @@ def main():
                 if valor_deposito > 0:
                     saldo += valor_deposito
                     
-                    # Formata a string para o histórico
                     historico_transacoes.append(f"Depósito: R$ {valor_deposito:.2f}")
                     
                     print(f"Depósito de R$ {valor_deposito:.2f} realizado com sucesso!")
@@ -53,9 +52,36 @@ def main():
 
         elif opcao == "s":
             print("\n--- Operação de Saque ---")
-            # Implementar a lógica de saque aqui
-            pass
+            
+            try:
+                valor_saque = float(input("Informe o valor do saque: R$ "))
 
+                if valor_saque <= 0:
+                    print("Operação falhou! O valor informado deve ser positivo.")
+                    continue
+
+                if valor_saque > saldo:
+                    print("Operação falhou! Você não tem saldo suficiente.")
+                    continue
+
+                if valor_saque > limite_valor_saque:
+                    print(f"Operação falhou! O valor máximo por saque é de R$ {limite_valor_saque:.2f}.")
+                    continue
+
+                if saques_realizados_hoje >= LIMITE_SAQUES:
+                    print("Operação falhou! Limite de saques diários atingido.")
+                    continue
+
+                saldo -= valor_saque
+                saques_realizados_hoje += 1
+                
+                historico_transacoes.append(f"Saque: R$ {valor_saque:.2f}")
+
+                print(f"Saque de R$ {valor_saque:.2f} realizado com sucesso!")
+
+            except ValueError:
+                print("Operação falhou! O valor informado não é um número válido.")
+        
         elif opcao == "e":
             print("\n--- Operação de Extrato ---")
             # Implementar a lógica de extrato aqui
