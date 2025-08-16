@@ -1,4 +1,4 @@
-# **Sistema Bancário - V1**
+# **Sistema Bancário - V2**
 
 ### Badges
 
@@ -7,10 +7,10 @@
 ### Índice
 
 * [Descrição do Projeto](#descrição-do-projeto)
-* [Status do Projeto](#status-do-projeto)
-* [Funcionalidades e Demonstração](#funcionalidades-e-demonstração-da-aplicação)
 * [Tecnologias Utilizadas](#tecnologias-utilizadas)
 * [Estrutura do Projeto](#estrutura-do-projeto)
+* [Status do Projeto](#status-do-projeto)
+* [Funcionalidades e Demonstração](#funcionalidades-e-demonstração-da-aplicação)
 * [Como Usar a Aplicação](#como-usar-a-aplicação)
 * [Equipe do Projeto](#equipe-do-projeto)
 * [Conclusão](#conclusão)
@@ -18,7 +18,7 @@
 
 ## Descrição do Projeto
 
-Este projeto é a primeira versão de um sistema bancário simples, desenvolvido em Python. Ele simula as operações básicas de um caixa eletrônico, permitindo que um único usuário realize depósitos, saques e visualize seu extrato. O objetivo principal foi aplicar a lógica de programação, manipulação de variáveis e estruturas condicionais para atender aos requisitos de um desafio de programação.
+Este projeto é a segunda versão de um sistema bancário, desenvolvida em Python. O código foi refatorado para se tornar mais robusto e modular, permitindo o gerenciamento de múltiplos usuários e contas correntes. As operações de depósito, saque e extrato agora são vinculadas a uma conta específica. O projeto foi aprimorado para utilizar funções com regras de passagem de argumentos (argumentos posicionais e nomeados), o que melhora a organização e a legibilidade do código.
 
 ### Tecnologias Utilizadas
 
@@ -31,37 +31,39 @@ sistema-bancario/
 ├── main.py
 └── README.md
 ```
-
 * `main.py`: Contém todo o código-fonte da aplicação, incluindo as variáveis globais, o menu e a lógica das operações.
 * `README.md`: Este arquivo de documentação, explicando o projeto.
 
 ### Status do Projeto
 
-✅ Concluído - Versão 1.0
+✅ Concluído - Versão 2.0
 
-Este projeto foi finalizado em sua primeira versão, com todas as funcionalidades básicas implementadas e testadas.
+Este projeto foi finalizado em sua segunda versão, com todas as funcionalidades implementadas e testadas.
 
 ## Funcionalidades e Demonstração da Aplicação
 
 ### Principais Funcionalidades
 
-* **Depósito:** Permite adicionar valores positivos à conta.
-* **Saque:** Limita os saques a um máximo de 3 por dia, com valor máximo de R$ 500,00 por operação, e verifica se o saldo é suficiente.
-* **Extrato:** Exibe o histórico de todas as transações (depósitos e saques) e o saldo atual da conta.
+* **Cadastro de Usuário:** Permite criar novos usuários com validação de CPF único.
+* **Criação de Conta:** Permite criar contas correntes, com um número sequencial, vinculando-as a um usuário existente.
+* **Depósito:** Realiza depósitos em uma conta específica, com argumentos posicionais.
+* **Saque:** Opera sobre uma conta específica, com as regras de limite diário e valor, e por argumentos nomeados.
+* **Extrato:** Exibe o histórico de transações e o saldo de uma conta específica, utilizando argumentos posicionais e nomeados.
+* **Listar Contas:** Permite visualizar todas as contas cadastradas no sistema.
 
 ### Como funciona
 
-A aplicação é executada via terminal e apresenta um menu interativo para o usuário escolher a operação desejada. As transações são armazenadas em uma lista e o saldo é atualizado a cada operação.
+A aplicação é executada via terminal, com um menu interativo que guia o usuário. Os dados de usuários e contas são armazenados em listas de dicionários, o que permite o gerenciamento de múltiplos objetos de forma eficiente. As operações agora são realizadas em funções separadas, que recebem e retornam os dados necessários para o sistema.
 
 ### Como Usar a Aplicação
 
 1.  Certifique-se de ter o Python 3 instalado em sua máquina.
 2.  Navegue até a pasta do projeto no seu terminal.
 3.  Execute o seguinte comando:
-```bash
+    ```bash
     python main.py
-```
-4.  Siga as instruções do menu para realizar as operações de depósito, saque e extrato.
+    ```
+4.  Utilize as opções do menu para criar usuários (`nu`), criar contas (`nc`) e depois realizar as operações bancárias (`d`, `s`, `e`) e visualizar as contas (`lc`).
 
 ## Equipe do Projeto
 
@@ -69,10 +71,10 @@ A aplicação é executada via terminal e apresenta um menu interativo para o us
 
 ## Conclusão
 
-Este projeto foi uma excelente oportunidade para solidificar conceitos de lógica de programação, variáveis e controle de fluxo em Python. As próximas versões podem incluir funcionalidades como a criação de classes para `Usuário` e `Conta`, múltiplas contas, e uma interface gráfica.
+A refatoração para a V2 solidificou conceitos de modularização, passagem de argumentos e estruturas de dados mais complexas em Python. O sistema agora é mais escalável e preparado para futuras expansões, como a implementação de classes para um design orientado a objetos.
 
 ## Prévia do Projeto
 
-A prévia do projeto é baseada em sua execução via terminal, exibindo um menu simples e mensagens de interação com o usuário.
+A prévia do projeto agora demonstra o novo menu e as funcionalidades de múltiplas contas em execução.
 
 <img width="1572" height="1025" alt="image" src="https://github.com/user-attachments/assets/6035baaa-1457-46af-a336-fadc58b70012" />
