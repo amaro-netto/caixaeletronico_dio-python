@@ -73,8 +73,21 @@ def criar_conta(agencia, numero_conta, usuarios):
     return nova_conta
 
 def listar_contas(contas):
-    # Lógica para listar todas as contas
-    pass
+    """Exibe todas as contas cadastradas no sistema."""
+    if not contas:
+        print("\n@@@ Não há contas cadastradas. @@@")
+        return
+
+    print("\n=== Lista de Contas ===")
+    for conta in contas:
+        linha = f"""\
+            Agência:\t{conta['agencia']}
+            C/C:\t\t{conta['numero_conta']}
+            Titular:\t{conta['usuario']['nome']}
+        """
+        print("-" * 20)
+        print(linha)
+    print("=======================")
 
 # ====================================================================
 # FUNÇÕES DE OPERAÇÃO (modularizadas)
@@ -98,6 +111,7 @@ def extrato(saldo, /, *, extrato):
 
 def main():
     """Função principal que gerencia o fluxo do caixa eletrônico."""
+    # Variáveis de controle de conta (Temporário, será alterado depois)
     saldo = 0
     saques_realizados = 0
     historico = []
@@ -126,9 +140,9 @@ def main():
             criar_usuario()
         elif opcao == "nc":
             numero_conta = len(contas) + 1
-            criar_conta(AGENCIA, numero_conta, usuarios)
+            conta = criar_conta(AGENCIA, numero_conta, usuarios)
         elif opcao == "lc":
-            pass
+            listar_contas(contas)
         elif opcao == "q":
             break
         else:
