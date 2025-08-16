@@ -8,6 +8,57 @@ usuarios = []
 contas = []
 
 # ====================================================================
+# FUNÇÕES AUXILIARES E NOVAS FUNÇÕES DO SISTEMA
+# ====================================================================
+
+def filtrar_usuario_por_cpf(cpf, usuarios):
+    """Filtra a lista de usuários e retorna o usuário com o CPF informado."""
+    for usuario in usuarios:
+        if usuario["cpf"] == cpf:
+            return usuario
+    return None
+
+def criar_usuario():
+    """Permite o cadastro de um novo usuário (cliente)."""
+    global usuarios
+
+    cpf = input("Informe o CPF (somente números): ")
+    usuario_existente = filtrar_usuario_por_cpf(cpf, usuarios)
+
+    if usuario_existente:
+        print("\n@@@ Já existe usuário com este CPF! @@@")
+        return
+
+    nome = input("Informe o nome completo: ")
+    data_nascimento = input("Informe a data de nascimento (dd-mm-aaaa): ")
+    
+    logradouro = input("Informe o logradouro (ex: Rua, Av, etc.): ")
+    nro = input("Informe o número: ")
+    bairro = input("Informe o bairro: ")
+    cidade = input("Informe a cidade: ")
+    estado = input("Informe a sigla do estado: ")
+    
+    endereco = f"{logradouro}, {nro} - {bairro} - {cidade}/{estado}"
+
+    novo_usuario = {
+        "nome": nome,
+        "data_nascimento": data_nascimento,
+        "cpf": cpf,
+        "endereco": endereco
+    }
+    
+    usuarios.append(novo_usuario)
+    print("\n=== Usuário criado com sucesso! ===")
+
+def criar_conta(agencia, numero_conta, usuarios):
+    # Lógica para criar conta e vincular a um usuário
+    pass
+
+def listar_contas(contas):
+    # Lógica para listar todas as contas
+    pass
+
+# ====================================================================
 # FUNÇÕES DE OPERAÇÃO (modularizadas)
 # ====================================================================
 
@@ -23,22 +74,6 @@ def extrato(saldo, /, *, extrato):
     # Lógica de extrato - (positional and keyword only)
     pass
 
-# ====================================================================
-# NOVAS FUNÇÕES DO SISTEMA
-# ====================================================================
-
-def criar_usuario():
-    # Lógica para cadastrar novo usuário
-    pass
-
-def criar_conta(agencia, numero_conta, usuarios):
-    # Lógica para criar conta e vincular a um usuário
-    pass
-
-def listar_contas(contas):
-    # Lógica para listar todas as contas
-    pass
-
 
 # ====================================================================
 # FUNÇÃO PRINCIPAL E MENU
@@ -46,8 +81,6 @@ def listar_contas(contas):
 
 def main():
     """Função principal que gerencia o fluxo do caixa eletrônico."""
-
-    # Variáveis de controle para a conta atual
     saldo = 0
     saques_realizados = 0
     historico = []
@@ -67,21 +100,17 @@ def main():
         opcao = input(menu).lower()
 
         if opcao == "d":
-            # Chama a função de depósito
             pass
         elif opcao == "s":
-            # Chama a função de saque
             pass
         elif opcao == "e":
-            # Chama a função de extrato
             pass
         elif opcao == "nu":
             criar_usuario()
         elif opcao == "nc":
-            # Chama a função de criar conta
             pass
         elif opcao == "lc":
-            listar_contas(contas)
+            pass
         elif opcao == "q":
             break
         else:
