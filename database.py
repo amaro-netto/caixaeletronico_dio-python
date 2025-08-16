@@ -115,6 +115,17 @@ def buscar_conta_por_numero(numero):
     conn.close()
     return conta
 
+def buscar_transacoes_por_conta_id(conta_id):
+    """Busca todas as transações de uma conta pelo seu ID."""
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM transacoes WHERE conta_id = ? ORDER BY data DESC;", (conta_id,))
+    transacoes = cursor.fetchall()
+    
+    conn.close()
+    return transacoes
+
 def atualizar_saldo_conta(numero_conta, novo_saldo):
     """Atualiza o saldo de uma conta na tabela 'contas'."""
     conn = sqlite3.connect(DB_NAME)
