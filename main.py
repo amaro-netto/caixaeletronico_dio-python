@@ -8,7 +8,7 @@ usuarios = []
 contas = []
 
 # ====================================================================
-# FUNÇÕES AUXILIARES
+# FUNÇÕES AUXILIARES E NOVAS FUNÇÕES DO SISTEMA
 # ====================================================================
 
 def filtrar_usuario_por_cpf(cpf, usuarios):
@@ -50,6 +50,13 @@ def criar_usuario():
     usuarios.append(novo_usuario)
     print("\n=== Usuário criado com sucesso! ===")
 
+def recuperar_conta_usuario(contas, numero_conta):
+    """Busca uma conta na lista pelo número da conta."""
+    for conta in contas:
+        if conta['numero_conta'] == numero_conta:
+            return conta
+    return None
+
 def criar_conta(agencia, numero_conta, usuarios):
     """Cria uma nova conta corrente e a vincula a um usuário existente."""
     global contas
@@ -64,7 +71,10 @@ def criar_conta(agencia, numero_conta, usuarios):
     nova_conta = {
         "agencia": agencia,
         "numero_conta": numero_conta,
-        "usuario": usuario
+        "usuario": usuario,
+        "saldo": 0,
+        "extrato": [],
+        "numero_saques": 0
     }
     contas.append(nova_conta)
     
@@ -156,10 +166,6 @@ def extrato(saldo, /, *, extrato):
 
 def main():
     """Função principal que gerencia o fluxo do caixa eletrônico."""
-    saldo = 0
-    saques_realizados = 0
-    historico = []
-    
     LIMITE_SAQUES = 3
     LIMITE_VALOR_SAQUE = 500
 
@@ -178,25 +184,74 @@ def main():
         opcao = input(menu).lower()
 
         if opcao == "d":
-            valor = float(input("Informe o valor do depósito: R$ "))
-            saldo, historico = deposito(saldo, valor, historico)
+            try:
+                numero_conta = int(input("Informe o número da conta: "))
+            except ValueError:
+                print("\n@@@ Número de conta inválido. Informe um número. @@@")
+                continue
+
+            conta = recuperar_conta_usuario(contas, numero_conta)
+            
+            if not conta:
+                print("\n@@@ Conta não encontrada! @@@")
+                continue
+
+            try:
+                valor = float(input("Informe o valor do depósito: R$ "))
+            except ValueError:
+                print("\n@@@ Valor inválido. Informe um número. @@@")
+                continue
+
+            conta['saldo'], conta['extrato'] = deposito(conta['saldo'], valor, conta['extrato'])
+
         elif opcao == "s":
-            valor = float(input("Informe o valor do saque: R$ "))
-            saldo, historico, saques_realizados = saque(
-                saldo=saldo,
+            try:
+                numero_conta = int(input("Informe o número da conta: "))
+            except ValueError:
+                print("\n@@@ Número de conta inválido. Informe um número. @@@")
+                continue
+
+            conta = recuperar_conta_usuario(contas, numero_conta)
+
+            if not conta:
+                print("\n@@@ Conta não encontrada! @@@")
+                continue
+
+            try:
+                valor = float(input("Informe o valor do saque: R$ "))
+            except ValueError:
+                print("\n@@@ Valor inválido. Informe um número. @@@")
+                continue
+
+            conta['saldo'], conta['extrato'], conta['numero_saques'] = saque(
+                saldo=conta['saldo'],
                 valor=valor,
-                extrato=historico,
+                extrato=conta['extrato'],
                 limite=LIMITE_VALOR_SAQUE,
-                numero_saques=saques_realizados,
+                numero_saques=conta['numero_saques'],
                 limite_saques=LIMITE_SAQUES
             )
+
         elif opcao == "e":
-            extrato(saldo, extrato=historico)
+            try:
+                numero_conta = int(input("Informe o número da conta: "))
+            except ValueError:
+                print("\n@@@ Número de conta inválido. Informe um número. @@@")
+                continue
+            
+            conta = recuperar_conta_usuario(contas, numero_conta)
+
+            if not conta:
+                print("\n@@@ Conta não encontrada! @@@")
+                continue
+
+            extrato(conta['saldo'], extrato=conta['extrato'])
+        
         elif opcao == "nu":
             criar_usuario()
         elif opcao == "nc":
             numero_conta = len(contas) + 1
-            conta = criar_conta(AGENCIA, numero_conta, usuarios)
+            criar_conta(AGENCIA, numero_conta, usuarios)
         elif opcao == "lc":
             listar_contas(contas)
         elif opcao == "q":
