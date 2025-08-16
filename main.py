@@ -2,52 +2,138 @@
 # SCRIPT PRINCIPAL DO SISTEMA BANCÁRIO - V3 (POO)
 # ====================================================================
 
-# Vamos definir as classes de acordo com o diagrama UML.
+# Funções auxiliares (manteremos por enquanto)
+# ...
 
 class PessoaFisica:
-    """
-    Classe base que representa uma Pessoa Física.
-    Possui atributos como nome, data de nascimento e CPF.
-    """
+    # ... (código da classe PessoaFisica) ...
     def __init__(self, nome, data_nascimento, cpf):
         self.nome = nome
         self.data_nascimento = data_nascimento
         self.cpf = cpf
 
 class Cliente(PessoaFisica):
-    """
-    Representa um Cliente do banco, que é uma Pessoa Física.
-    Possui uma lista de contas e um endereço.
-    """
+    # ... (código da classe Cliente) ...
     def __init__(self, nome, data_nascimento, cpf, endereco):
-        # Chama o construtor da classe-mãe (PessoaFisica)
         super().__init__(nome, data_nascimento, cpf)
         self.endereco = endereco
-        self.contas = []  # Lista para armazenar as contas do cliente
+        self.contas = []
     
     def realizar_transacao(self, conta, transacao):
-        """Método para o cliente realizar uma transação em uma conta específica."""
-        # A lógica para isso será implementada mais tarde
         pass
 
     def adicionar_conta(self, conta):
-        """Adiciona uma nova conta à lista de contas do cliente."""
         self.contas.append(conta)
 
 
 # ====================================================================
-# OUTRAS CLASSES SERÃO DEFINIDAS A SEGUIR
+# NOVAS CLASSES DE CONTA E HISTÓRICO
 # ====================================================================
 
+class Historico:
+    """
+    Classe para armazenar o histórico de transações de uma conta.
+    """
+    def __init__(self):
+        self._transacoes = []
+    
+    @property
+    def transacoes(self):
+        return self._transacoes
+
+    def adicionar_transacao(self, transacao):
+        self._transacoes.append(transacao)
+
+class Conta:
+    """
+    Classe base para contas bancárias.
+    Possui saldo, número, agência, cliente e histórico.
+    """
+    def __init__(self, numero, cliente):
+        self._saldo = 0
+        self._numero = numero
+        self._agencia = "0001"
+        self._cliente = cliente
+        self._historico = Historico()
+
+    @classmethod
+    def nova_conta(cls, cliente, numero):
+        return cls(numero, cliente)
+    
+    @property
+    def saldo(self):
+        return self._saldo
+    
+    @property
+    def numero(self):
+        return self._numero
+    
+    @property
+    def agencia(self):
+        return self._agencia
+    
+    @property
+    def cliente(self):
+        return self._cliente
+    
+    @property
+    def historico(self):
+        return self._historico
+
+    def sacar(self, valor):
+        if valor <= 0:
+            print("\n@@@ Valor de saque inválido. @@@")
+            return False
+        
+        if valor > self.saldo:
+            print("\n@@@ Saldo insuficiente. @@@")
+            return False
+
+        self._saldo -= valor
+        print("\n=== Saque realizado com sucesso! ===")
+        return True
+
+    def depositar(self, valor):
+        if valor <= 0:
+            print("\n@@@ Valor de depósito inválido. @@@")
+            return False
+        
+        self._saldo += valor
+        self.historico.adicionar_transacao(f"Depósito de R$ {valor:.2f}")
+        print("\n=== Depósito realizado com sucesso! ===")
+        return True
+
+
+class ContaCorrente(Conta):
+    """
+    Representa uma Conta Corrente, que herda de Conta.
+    Possui atributos específicos de limite e limite de saques.
+    """
+    def __init__(self, numero, cliente, limite=500, limite_saques=3):
+        super().__init__(numero, cliente)
+        self.limite = limite
+        self.limite_saques = limite_saques
+
+    def sacar(self, valor):
+        numero_saques = len([
+            transacao for transacao in self.historico.transacoes 
+            if "Saque" in transacao
+        ])
+        
+        if valor > self.limite:
+            print(f"\n@@@ O valor do saque excede o limite de R$ {self.limite:.2f}. @@@")
+            return False
+        
+        if numero_saques >= self.limite_saques:
+            print("\n@@@ Número máximo de saques diários atingido. @@@")
+            return False
+        
+        # Chama o método sacar da classe-mãe (Conta)
+        return super().sacar(valor)
+
 
 # ====================================================================
-# FUNÇÃO PRINCIPAL E MENU (ainda a ser refatorada para usar as classes)
+# FUNÇÃO PRINCIPAL E MENU (a ser refatorada)
 # ====================================================================
 
-def main():
-    # O loop principal e as funcionalidades serão reescritos
-    # para interagir com objetos, não mais com dicionários.
-    pass
-
-if __name__ == "__main__":
-    main()
+# ... (código da função main) ...
