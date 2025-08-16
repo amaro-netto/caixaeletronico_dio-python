@@ -1,8 +1,10 @@
-# **Sistema Bancário - V2**
+# **Sistema Bancário - V4**
 
 ### Badges
 
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
+[![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/index.html)
+[![Tkinter](https://img.shields.io/badge/Tkinter-000000?style=for-the-badge&logo=python&logoColor=white)]()
 
 ### Índice
 
@@ -18,52 +20,61 @@
 
 ## Descrição do Projeto
 
-Este projeto é a segunda versão de um sistema bancário, desenvolvida em Python. O código foi refatorado para se tornar mais robusto e modular, permitindo o gerenciamento de múltiplos usuários e contas correntes. As operações de depósito, saque e extrato agora são vinculadas a uma conta específica. O projeto foi aprimorado para utilizar funções com regras de passagem de argumentos (argumentos posicionais e nomeados), o que melhora a organização e a legibilidade do código.
+Esta é a quarta versão de um sistema bancário, desenvolvida em Python. O projeto evoluiu significativamente, substituindo a interface de terminal por uma **Interface Gráfica (GUI)** completa, utilizando a biblioteca Tkinter. Além disso, a persistência de dados foi implementada através de um **banco de dados local SQLite**, garantindo que as informações de clientes, contas e transações sejam salvas e não se percam ao encerrar o programa.
 
 ### Tecnologias Utilizadas
 
 * **Linguagem de Programação:** Python 3.x
+* **Banco de Dados:** SQLite3
+* **Interface Gráfica:** Tkinter
 
 ### Estrutura do Projeto
 
 ```bash
 sistema-bancario/
 ├── main.py
+├── gui.py
+├── database.py
 └── README.md
 ```
-* `main.py`: Contém todo o código-fonte da aplicação, incluindo as variáveis globais, o menu e a lógica das operações.
-* `README.md`: Este arquivo de documentação, explicando o projeto.
+* `main.py`: Ponto de entrada da aplicação. Inicializa o banco de dados e a interface gráfica.
+* `gui.py`: Contém a lógica de toda a Interface Gráfica (janelas, botões, campos, etc.).
+* `database.py`: Encapsula toda a lógica de comunicação com o banco de dados SQLite, incluindo a criação de tabelas e as operações de escrita e leitura.
+* `README.md`: Este arquivo de documentação, atualizado para a V4.
 
 ### Status do Projeto
 
-✅ Concluído - Versão 2.0
+✅ Concluído - Versão 4.0
 
-Este projeto foi finalizado em sua segunda versão, com todas as funcionalidades implementadas e testadas.
+Esta versão está finalizada e com todas as funcionalidades implementadas e testadas, com interface gráfica e persistência de dados.
 
 ## Funcionalidades e Demonstração da Aplicação
 
 ### Principais Funcionalidades
 
-* **Cadastro de Usuário:** Permite criar novos usuários com validação de CPF único.
-* **Criação de Conta:** Permite criar contas correntes, com um número sequencial, vinculando-as a um usuário existente.
-* **Depósito:** Realiza depósitos em uma conta específica, com argumentos posicionais.
-* **Saque:** Opera sobre uma conta específica, com as regras de limite diário e valor, e por argumentos nomeados.
-* **Extrato:** Exibe o histórico de transações e o saldo de uma conta específica, utilizando argumentos posicionais e nomeados.
-* **Listar Contas:** Permite visualizar todas as contas cadastradas no sistema.
+* **Interface Gráfica:** Substitui a interação por comandos de texto por uma interface visual com janelas e botões.
+* **Persistência de Dados:** Todos os dados de clientes, contas e transações são salvos de forma permanente em um arquivo de banco de dados.
+* **Cadastro de Usuário:** Permite criar novos clientes através de um formulário na GUI.
+* **Criação de Conta:** Permite criar contas correntes, vinculando-as a um cliente existente.
+* **Depósito, Saque e Extrato:** Todas as operações são realizadas por meio de formulários na interface, com a validação e atualização dos dados no banco.
 
 ### Como funciona
 
-A aplicação é executada via terminal, com um menu interativo que guia o usuário. Os dados de usuários e contas são armazenados em listas de dicionários, o que permite o gerenciamento de múltiplos objetos de forma eficiente. As operações agora são realizadas em funções separadas, que recebem e retornam os dados necessários para o sistema.
+O programa é iniciado pelo `main.py`, que cria o banco de dados e abre a janela principal da GUI. A interação do usuário com a interface aciona funções que se comunicam com o `database.py`, que por sua vez manipula os dados no arquivo `banco.db`.
 
 ### Como Usar a Aplicação
 
 1.  Certifique-se de ter o Python 3 instalado em sua máquina.
 2.  Navegue até a pasta do projeto no seu terminal.
-3.  Execute o seguinte comando:
+3.  Execute o seguinte comando **uma única vez** para inicializar o banco de dados:
+    ```bash
+    python database.py
+    ```
+4.  Em seguida, execute a aplicação com:
     ```bash
     python main.py
     ```
-4.  Utilize as opções do menu para criar usuários (`nu`), criar contas (`nc`) e depois realizar as operações bancárias (`d`, `s`, `e`) e visualizar as contas (`lc`).
+5.  Utilize as opções do menu da GUI para interagir com o sistema.
 
 ## Equipe do Projeto
 
@@ -71,10 +82,10 @@ A aplicação é executada via terminal, com um menu interativo que guia o usuá
 
 ## Conclusão
 
-A refatoração para a V2 solidificou conceitos de modularização, passagem de argumentos e estruturas de dados mais complexas em Python. O sistema agora é mais escalável e preparado para futuras expansões, como a implementação de classes para um design orientado a objetos.
+A implementação da V4 marcou um grande avanço no projeto, introduzindo conceitos fundamentais de desenvolvimento de aplicações, como a separação de camadas (GUI e banco de dados) e a persistência de informações. O projeto está agora preparado para futuras otimizações, como a migração para um design Orientado a Objetos na próxima versão.
 
 ## Prévia do Projeto
 
-A prévia do projeto agora demonstra o novo menu e as funcionalidades de múltiplas contas em execução.
+A prévia do projeto demonstra a interface gráfica e o fluxo de operações do sistema.
+<img width="1148" height="793" alt="Captura de tela 2025-08-16 194524" src="https://github.com/user-attachments/assets/7add3a5b-8f57-4c7f-9bd0-6ee8510b4caf" />
 
-<img width="1572" height="1025" alt="image" src="https://github.com/user-attachments/assets/6035baaa-1457-46af-a336-fadc58b70012" />
