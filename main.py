@@ -51,8 +51,26 @@ def criar_usuario():
     print("\n=== Usuário criado com sucesso! ===")
 
 def criar_conta(agencia, numero_conta, usuarios):
-    # Lógica para criar conta e vincular a um usuário
-    pass
+    """Cria uma nova conta corrente e a vincula a um usuário existente."""
+    global contas
+
+    cpf = input("Informe o CPF do usuário: ")
+    usuario = filtrar_usuario_por_cpf(cpf, usuarios)
+
+    if not usuario:
+        print("\n@@@ Usuário não encontrado, fluxo de criação de conta encerrado! @@@")
+        return None
+
+    nova_conta = {
+        "agencia": agencia,
+        "numero_conta": numero_conta,
+        "usuario": usuario
+    }
+    contas.append(nova_conta)
+    
+    print(f"\n=== Conta {numero_conta} criada com sucesso para o usuário {usuario['nome']}! ===")
+    
+    return nova_conta
 
 def listar_contas(contas):
     # Lógica para listar todas as contas
@@ -73,7 +91,6 @@ def saque(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
 def extrato(saldo, /, *, extrato):
     # Lógica de extrato - (positional and keyword only)
     pass
-
 
 # ====================================================================
 # FUNÇÃO PRINCIPAL E MENU
@@ -108,7 +125,8 @@ def main():
         elif opcao == "nu":
             criar_usuario()
         elif opcao == "nc":
-            pass
+            numero_conta = len(contas) + 1
+            criar_conta(AGENCIA, numero_conta, usuarios)
         elif opcao == "lc":
             pass
         elif opcao == "q":
