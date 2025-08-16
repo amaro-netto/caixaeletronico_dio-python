@@ -8,7 +8,7 @@ usuarios = []
 contas = []
 
 # ====================================================================
-# FUNÇÕES AUXILIARES E NOVAS FUNÇÕES DO SISTEMA
+# FUNÇÕES AUXILIARES
 # ====================================================================
 
 def filtrar_usuario_por_cpf(cpf, usuarios):
@@ -94,16 +94,61 @@ def listar_contas(contas):
 # ====================================================================
 
 def deposito(saldo, valor, extrato, /):
-    # Lógica de depósito - (positional only)
-    pass
+    """
+    Realiza a operação de depósito.
+    Argumentos: saldo, valor, extrato (posicionais).
+    Retorna: saldo e extrato atualizados.
+    """
+    if valor > 0:
+        saldo += valor
+        extrato.append(f"Depósito:\t\tR$ {valor:.2f}")
+        print("\n=== Depósito realizado com sucesso! ===")
+    else:
+        print("\n@@@ Operação falhou! O valor informado é inválido. @@@")
+    
+    return saldo, extrato
 
 def saque(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
-    # Lógica de saque - (keyword only)
-    pass
+    """
+    Realiza a operação de saque.
+    Argumentos: saldo, valor, extrato, limite, numero_saques, limite_saques (nomeados).
+    Retorna: saldo e extrato atualizados.
+    """
+    saldo_insuficiente = valor > saldo
+    limite_saque_excedido = valor > limite
+    limite_saques_excedido = numero_saques >= limite_saques
+
+    if saldo_insuficiente:
+        print("\n@@@ Operação falhou! Você não tem saldo suficiente. @@@")
+    elif limite_saque_excedido:
+        print(f"\n@@@ Operação falhou! O valor do saque excede o limite de R$ {limite:.2f}. @@@")
+    elif limite_saques_excedido:
+        print("\n@@@ Operação falhou! Número máximo de saques diários excedido. @@@")
+    elif valor > 0:
+        saldo -= valor
+        extrato.append(f"Saque:\t\t\tR$ {valor:.2f}")
+        numero_saques += 1
+        print("\n=== Saque realizado com sucesso! ===")
+    else:
+        print("\n@@@ Operação falhou! O valor informado é inválido. @@@")
+    
+    return saldo, extrato, numero_saques
 
 def extrato(saldo, /, *, extrato):
-    # Lógica de extrato - (positional and keyword only)
-    pass
+    """
+    Exibe o extrato da conta.
+    Argumentos: saldo (posicional) e extrato (nomeado).
+    Não há retorno.
+    """
+    print("\n================ EXTRATO ================")
+    if not extrato:
+        print("Não foram realizadas movimentações.")
+    else:
+        for transacao in extrato:
+            print(transacao)
+
+    print(f"\nSaldo:\t\t\tR$ {saldo:.2f}")
+    print("==========================================")
 
 # ====================================================================
 # FUNÇÃO PRINCIPAL E MENU
@@ -111,10 +156,12 @@ def extrato(saldo, /, *, extrato):
 
 def main():
     """Função principal que gerencia o fluxo do caixa eletrônico."""
-    # Variáveis de controle de conta (Temporário, será alterado depois)
     saldo = 0
     saques_realizados = 0
     historico = []
+    
+    LIMITE_SAQUES = 3
+    LIMITE_VALOR_SAQUE = 500
 
     menu = """\n
     [d] Depositar
@@ -131,11 +178,20 @@ def main():
         opcao = input(menu).lower()
 
         if opcao == "d":
-            pass
+            valor = float(input("Informe o valor do depósito: R$ "))
+            saldo, historico = deposito(saldo, valor, historico)
         elif opcao == "s":
-            pass
+            valor = float(input("Informe o valor do saque: R$ "))
+            saldo, historico, saques_realizados = saque(
+                saldo=saldo,
+                valor=valor,
+                extrato=historico,
+                limite=LIMITE_VALOR_SAQUE,
+                numero_saques=saques_realizados,
+                limite_saques=LIMITE_SAQUES
+            )
         elif opcao == "e":
-            pass
+            extrato(saldo, extrato=historico)
         elif opcao == "nu":
             criar_usuario()
         elif opcao == "nc":
