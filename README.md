@@ -1,4 +1,4 @@
-# **Sistema Bancário - V2**
+# **Sistema Bancário - V3 (POO)**
 
 ### Badges
 
@@ -18,7 +18,7 @@
 
 ## Descrição do Projeto
 
-Este projeto é a segunda versão de um sistema bancário, desenvolvida em Python. O código foi refatorado para se tornar mais robusto e modular, permitindo o gerenciamento de múltiplos usuários e contas correntes. As operações de depósito, saque e extrato agora são vinculadas a uma conta específica. O projeto foi aprimorado para utilizar funções com regras de passagem de argumentos (argumentos posicionais e nomeados), o que melhora a organização e a legibilidade do código.
+Este projeto é a terceira e mais avançada versão de um sistema bancário. Ele foi completamente atualizado para seguir os princípios da **Programação Orientada a Objetos (POO)**, substituindo as estruturas de dados baseadas em dicionários por classes e objetos. A arquitetura do sistema agora é mais robusta e escalável, modelando o domínio bancário com classes como `Cliente`, `Conta`, `Historico` e `Transacao`, conforme um diagrama UML. O objetivo foi aprofundar os conceitos de classes, herança, encapsulamento e polimorfismo em Python.
 
 ### Tecnologias Utilizadas
 
@@ -31,29 +31,29 @@ sistema-bancario/
 ├── main.py
 └── README.md
 ```
+
 * `main.py`: Contém todo o código-fonte da aplicação, incluindo as variáveis globais, o menu e a lógica das operações.
 * `README.md`: Este arquivo de documentação, explicando o projeto.
 
 ### Status do Projeto
+✅ Concluído - Versão 3.0
 
-✅ Concluído - Versão 2.0
-
-Este projeto foi finalizado em sua segunda versão, com todas as funcionalidades implementadas e testadas.
+Este projeto foi finalizado em sua terceira versão, com todas as funcionalidades implementadas e testadas.
 
 ## Funcionalidades e Demonstração da Aplicação
 
 ### Principais Funcionalidades
 
-* **Cadastro de Usuário:** Permite criar novos usuários com validação de CPF único.
-* **Criação de Conta:** Permite criar contas correntes, com um número sequencial, vinculando-as a um usuário existente.
-* **Depósito:** Realiza depósitos em uma conta específica, com argumentos posicionais.
-* **Saque:** Opera sobre uma conta específica, com as regras de limite diário e valor, e por argumentos nomeados.
-* **Extrato:** Exibe o histórico de transações e o saldo de uma conta específica, utilizando argumentos posicionais e nomeados.
-* **Listar Contas:** Permite visualizar todas as contas cadastradas no sistema.
+* **Cadastro de Clientes:** Permite criar novos clientes (objetos da classe `Cliente`) com validação de CPF único.
+* **Criação de Contas:** Permite criar contas correntes (objetos da classe `ContaCorrente`), com um número sequencial, e vinculá-las a um cliente existente.
+* **Depósito:** Operação realizada através do método `depositar()` do objeto da conta, garantindo a atualização do saldo e do histórico.
+* **Saque:** Operação realizada através do método `sacar()` do objeto da conta, com as regras de limite diário e valor, além da validação de saldo suficiente.
+* **Extrato:** Exibe o histórico de transações e o saldo de uma conta específica, acessando os atributos do objeto da conta.
+* **Listar Contas:** Permite visualizar todas as contas (objetos) cadastradas no sistema.
 
 ### Como funciona
 
-A aplicação é executada via terminal, com um menu interativo que guia o usuário. Os dados de usuários e contas são armazenados em listas de dicionários, o que permite o gerenciamento de múltiplos objetos de forma eficiente. As operações agora são realizadas em funções separadas, que recebem e retornam os dados necessários para o sistema.
+A aplicação é executada via terminal e agora interage com objetos, que encapsulam os dados e o comportamento do sistema. Os objetos de clientes e contas são armazenados em listas, e as operações bancárias são realizadas chamando os métodos correspondentes de cada objeto. Essa abordagem orientada a objetos torna o código mais intuitivo, organizado e escalável.
 
 ### Como Usar a Aplicação
 
@@ -63,7 +63,7 @@ A aplicação é executada via terminal, com um menu interativo que guia o usuá
     ```bash
     python main.py
     ```
-4.  Utilize as opções do menu para criar usuários (`nu`), criar contas (`nc`) e depois realizar as operações bancárias (`d`, `s`, `e`) e visualizar as contas (`lc`).
+4.  Utilize as opções do menu para criar clientes (`nu`), criar contas (`nc`) e depois realizar as operações bancárias (`d`, `s`, `e`) e visualizar as contas (`lc`).
 
 ## Equipe do Projeto
 
@@ -71,7 +71,7 @@ A aplicação é executada via terminal, com um menu interativo que guia o usuá
 
 ## Conclusão
 
-A refatoração para a V2 solidificou conceitos de modularização, passagem de argumentos e estruturas de dados mais complexas em Python. O sistema agora é mais escalável e preparado para futuras expansões, como a implementação de classes para um design orientado a objetos.
+A refatoração para a V3, utilizando a Programação Orientada a Objetos, solidificou conceitos de herança, encapsulamento e polimorfismo, resultando em um código mais limpo, reutilizável e fácil de manter. O sistema agora é mais escalável e representa um avanço significativo na modelagem do problema.
 
 ## Prévia do Projeto
 
